@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Course2l1</string>
+
+    <string-array name="dep_items">
+        <item>Unknown-Unknown</item>
+        <item>Разработки-Якутск</item>
+        <item>Тестирования-Пермь</item>
+        <item>Продаж-Москва</item>
+        <item>Рекламы-Ростов</item>
+    </string-array>
+
+    <string-array name="empl_items">
+        <item>Unknown-Unknown-0</item>
+        <item>Василий Пупкин-Разработчик ПО-1</item>
+        <item>Аркадий Укупник-Менеджер по рекламе-4</item>
+        <item>Олег Олег-Менеджер по рекламе-3</item>
+        <item>Дон Хуан-Кассир-2</item>
+    </string-array>
 </resources>
