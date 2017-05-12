@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 import com.example.kate.course2l1.R;
 
@@ -24,6 +25,10 @@ public class DBEmployee extends DBSQLite {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+        Log.d("employee", TableEmployee.SQL_CREATE);
+        Log.d("TableDepartment", TableDepartment.SQL_CREATE);
+
+
         DBSQLite.execSQL(db, TableEmployee.SQL_CREATE);
         DBSQLite.execSQL(db, TableDepartment.SQL_CREATE);
 
@@ -35,10 +40,25 @@ public class DBEmployee extends DBSQLite {
 
             String[] dep = deps[i].split("-");
 
-            values.put(TableDepartment.C_NAME, dep[0]);
+            values.put(TableDepartment.C_DEP, dep[0]);
             values.put(TableDepartment.C_LOCA, dep[1]);
 
             db.insert(TableDepartment.T_NAME, null, values);
+        }
+
+        String[] empls = getContext().getResources().getStringArray(
+                R  .array.empl_items);
+        ContentValues contentValues = new ContentValues(empls.length);
+
+        for (int i = 0; i < empls.length; i++) {
+
+            String[] empl = empls[i].split("-");
+
+            contentValues.put(TableEmployee.C_NAME, empl[0]);
+            contentValues.put(TableEmployee.C_INFO, empl[1]);
+            contentValues.put(TableEmployee.C_DEP_ID, empl[2]);
+
+            db.insert(TableEmployee.T_NAME, null, contentValues);
         }
     }
 
@@ -55,7 +75,7 @@ public class DBEmployee extends DBSQLite {
 
         ContentValues v = new ContentValues();
 
-        v.put(TableDepartment.C_NAME, name);
+        v.put(TableDepartment.C_DEP, name);
         v.put(TableDepartment.C_LOCA, location);
 
         return this.getWritableDatabase().insert(TableDepartment.T_NAME, null, v);
@@ -66,7 +86,7 @@ public class DBEmployee extends DBSQLite {
 
         ContentValues v = new ContentValues();
 
-        v.put(TableDepartment.C_NAME, name);
+        v.put(TableDepartment.C_DEP, name);
         v.put(TableDepartment.C_LOCA, location);
 
         return 1 == this.getWritableDatabase().update(TableDepartment.T_NAME, v,
@@ -113,26 +133,28 @@ public class DBEmployee extends DBSQLite {
     public static class TableEmployee implements BaseColumns {
 
         public static final String T_NAME = "tEmpl";
-        public static final String C_NAME = "NAME";
-        public static final String C_INFO = "INFO";
-        public static final String C_DEP_ID  = "DEP_ID";
+        public static final String C_NAME = "name";
+        public static final String C_INFO = "info";
+        public static final String C_DEP_ID  = "dep_id";
 
         public static final String SQL_CREATE = "CREATE TABLE " + T_NAME +
                 " (" + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 C_NAME + " TEXT," +
                 C_INFO + " TEXT," +
-                C_DEP_ID + " INTEGER)";
+                C_DEP_ID + " INTEGER," +
+                "FOREIGN KEY ("+C_DEP_ID+") REFERENCES "+TableDepartment.T_NAME+" ("+TableDepartment._ID+")"
+        + ")";
     }
 
     public static class TableDepartment implements BaseColumns {
 
         public static final String T_NAME = "tDep";
-        public static final String C_NAME = "NAME";
-        public static final String C_LOCA = "LOCATION";
+        public static final String C_DEP = "dep";
+        public static final String C_LOCA = "location";
 
         public static final String SQL_CREATE = "CREATE TABLE " + T_NAME +
                 " (" + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                C_NAME + " TEXT," +
+                C_DEP + " TEXT," +
                 C_LOCA + " TEXT)";
     }
 }
