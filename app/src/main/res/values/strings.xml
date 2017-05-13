@@ -10,10 +10,10 @@
     </string-array>
 
     <string-array name="empl_items">
-        <item>Unknown-Unknown-0</item>
-        <item>Василий Пупкин-Разработчик ПО-1</item>
-        <item>Аркадий Укупник-Менеджер по рекламе-4</item>
-        <item>Олег Олег-Менеджер по рекламе-3</item>
-        <item>Дон Хуан-Кассир-2</item>
+        <item>Unknown-Unknown-1</item>
+        <item>Василий Пупкин-Разработчик ПО-2</item>
+        <item>Аркадий Укупник-Менеджер по рекламе-5</item>
+        <item>Олег Олег-Менеджер по рекламе-4</item>
+        <item>Дон Хуан-Кассир-3</item>
     </string-array>
 </resources>

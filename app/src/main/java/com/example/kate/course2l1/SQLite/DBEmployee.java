@@ -2,10 +2,12 @@ package com.example.kate.course2l1.SQLite;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 import android.util.Log;
 
+import com.example.kate.course2l1.App;
 import com.example.kate.course2l1.R;
 
 /**
@@ -69,6 +71,23 @@ public class DBEmployee extends DBSQLite {
         DBSQLite.dropTable(db, TableDepartment.T_NAME);
 
         this.onCreate(db);
+    }
+
+    public Cursor getCursorForLinkedDBs(){
+
+        String SQLQuery = "SELECT " +
+                DBEmployee.TableEmployee.T_NAME +  "." + DBEmployee.TableEmployee._ID + ", " +
+                DBEmployee.TableEmployee.T_NAME +  "." + DBEmployee.TableEmployee.C_NAME + ", " +
+                DBEmployee.TableEmployee.C_INFO + ", " +
+                DBEmployee.TableDepartment.C_DEP + ", " +
+                DBEmployee.TableDepartment.C_LOCA +
+                " FROM " +
+                DBEmployee.TableEmployee.T_NAME +
+                " INNER JOIN " + DBEmployee.TableDepartment.T_NAME +
+                " ON " + DBEmployee.TableEmployee.T_NAME +  "." + DBEmployee.TableEmployee.C_DEP_ID + " = " +
+                DBEmployee.TableDepartment.T_NAME + "." + DBEmployee.TableDepartment._ID;
+
+        return App.getDB().getReadableDatabase().rawQuery(SQLQuery, null);
     }
 
     public long addDep(String name, String location) {
